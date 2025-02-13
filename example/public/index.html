@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>TabSync Example</title>
+  <title>TabSyncer Example</title>
 </head>
 
 <body>
   <div style="display: flex; justify-content: center; ">
     <div style="padding: 20px;">
-      <h2>TabSync Example</h2>
+      <h2>TabSyncer Example</h2>
       <div>
         <h3>Counter</h3>
         Count: <span id="count">0</span>
@@ -29,9 +29,9 @@
   </div>
 
   <script type="module">
-    import { TabSync } from '/dist/index.js';
+    import { TabSyncer } from '/dist/index.js';
 
-    const tabSync = new TabSync(
+    const tabSync = new TabSyncer(
       'example',
       'broadcast',
       {

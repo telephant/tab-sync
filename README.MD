@@ -1,4 +1,4 @@
-# TabSync
+# TabSyncer
 
 🚀 The simplest way to sync data between browser tabs! A tiny yet powerful library that makes tab communication a breeze.
 
@@ -7,7 +7,7 @@
 
 ## English
 
-### Why TabSync?
+### Why TabSyncer?
 
 - 🪶 **Incredibly Light** - Tiny 4KB footprint with zero dependencies. Your bundle size will thank you!
 - 🔄 **Seamless Sync** - Keep your tabs in perfect harmony. Update data in one tab, see it everywhere!
@@ -19,18 +19,18 @@
 ### Get Started in Seconds
 
 ```bash
-npm install tab-sync
+npm install tab-syncer
 # or
-yarn add tab-sync
+yarn add tab-syncer
 ```
 
 ### Show Me the Code!
 
 ```typescript
-import { TabSync } from 'tab-sync';
+import { TabSyncer } from 'tab-syncer';
 
 // Initialize TabSync with a unique namespace and initial state
-const tabSync = new TabSync(
+const tabSyncer = new TabSyncer(
   'myApp',           // namespace
   'broadcast',       // sync method
   {                  // initial state
@@ -40,7 +40,7 @@ const tabSync = new TabSync(
 );
 
 // Update state
-tabSync.setState(prevState => ({
+tabSyncer.setState(prevState => ({
   ...prevState,
   count: prevState.count + 1
 }));
@@ -49,15 +49,15 @@ tabSync.setState(prevState => ({
 const state = tabSync.getState();
 
 // Listen to state changes
-tabSync.onStateChange((state) => {
+tabSyncer.onStateChange((state) => {
   console.log('State updated:', state);
 });
 
 // Send notifications across tabs
-tabSync.notify('customEvent', { data: 'Hello from another tab!' });
+tabSyncer.notify('customEvent', { data: 'Hello from another tab!' });
 
 // Subscribe to notifications
-tabSync.subscribe('customEvent', (data) => {
+tabSyncer.subscribe('customEvent', (data) => {
   console.log('Received:', data);
 });
 ```
@@ -66,11 +66,11 @@ tabSync.subscribe('customEvent', (data) => {
 
 ### Constructor
 
-#### `new TabSync(namespace, method, initialState)`
-Creates a new TabSync instance.
+#### `new TabSyncer(namespace, method, initialState)`
+Creates a new TabSyncer instance.
 
 ```typescript
-new TabSync(
+new TabSyncer(
   namespace: string,  // Unique identifier for your app instance
   method: string,     // Sync method, currently supports 'broadcast'
   initialState: T     // Initial state object of any type
@@ -90,10 +90,10 @@ setState(newState: T | ((prevState: T) => T)): void
 **Example:**
 ```typescript
 // Direct value
-tabSync.setState({ count: 1, message: 'Hello' });
+tabSyncer.setState({ count: 1, message: 'Hello' });
 
 // Updater function
-tabSync.setState(prevState => ({
+tabSyncer.setState(prevState => ({
   ...prevState,
   count: prevState.count + 1
 }));
@@ -109,7 +109,7 @@ getState(): T
 
 **Example:**
 ```typescript
-const currentState = tabSync.getState();
+const currentState = tabSyncer.getState();
 console.log(currentState); // { count: 1, message: 'Hello' }
 ```
 
@@ -123,7 +123,7 @@ onStateChange(callback: (state: T) => void): () => void
 
 **Example:**
 ```typescript
-const unsubscribe = tabSync.onStateChange((state) => {
+const unsubscribe = tabSyncer.onStateChange((state) => {
   console.log('New state:', state);
 });
 
@@ -141,7 +141,7 @@ notify(event: string, data: any): void
 
 **Example:**
 ```typescript
-tabSync.notify('userLoggedIn', { 
+tabSyncer.notify('userLoggedIn', { 
   userId: 123,
   timestamp: Date.now()
 });
@@ -157,7 +157,7 @@ subscribe(event: string, callback: (data: any) => void): () => void
 
 **Example:**
 ```typescript
-const unsubscribe = tabSync.subscribe('userLoggedIn', (data) => {
+const unsubscribe = tabSyncer.subscribe('userLoggedIn', (data) => {
   console.log('User logged in from another tab:', data);
 });
 

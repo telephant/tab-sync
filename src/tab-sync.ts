@@ -1,9 +1,9 @@
 import { BroadcastHandler } from './comm/broadcast';
 import { SyncMode, EventMap } from './interface/base';
-import { TabSyncType } from './interface/tab-sync';
+import { TabSyncerType } from './interface/tab-sync';
 import { State } from './store/state';
 
-class TabSync<T extends EventMap, P extends object> implements TabSyncType<T> {
+class TabSyncer<T extends EventMap, P extends object> implements TabSyncerType<T> {
   private name: string;
 
   private mode: SyncMode;
@@ -64,6 +64,6 @@ class TabSync<T extends EventMap, P extends object> implements TabSyncType<T> {
 }
 
 export {
-  TabSync
+  TabSyncer
 };
 

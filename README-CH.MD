@@ -1,4 +1,4 @@
-# TabSync
+# TabSyncer
 
 🚀 一个轻量级（仅 4KB）的浏览器标签页数据同步库，让标签页之间的通信变得简单高效。
 
@@ -16,32 +16,32 @@
 ## 安装
 
 ```bash
-npm install tab-sync
+npm install tab-syncer
 # 或者
-yarn add tab-sync
+yarn add tab-syncer
 ```
 
 ## 使用示例
 
 ```typescript
-import { TabSync } from 'tab-sync';
+import { TabSyncer } from 'tab-syncer';
 
 // 初始化
-const tabSync = new TabSync('myApp', 'broadcast', { count: 0 });
+const tabSyncer = new TabSyncer('myApp', 'broadcast', { count: 0 });
 
 // 更新状态，自动同步到其他标签页
-tabSync.setState(prev => ({ count: prev.count + 1 }));
+tabSyncer.setState(prev => ({ count: prev.count + 1 }));
 
 // 监听状态变化
-tabSync.onStateChange(state => {
+tabSyncer.onStateChange(state => {
   console.log('状态已更新：', state);
 });
 
 // 发送消息到其他标签页
-tabSync.notify('customEvent', '消息内容');
+tabSyncer.notify('customEvent', '消息内容');
 
 // 接收其他标签页的消息
-tabSync.subscribe('customEvent', data => {
+tabSyncer.subscribe('customEvent', data => {
   console.log('收到消息：', data);
 });
 ```

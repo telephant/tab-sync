@@ -1,5 +1,5 @@
-import { TabSync } from './tab-sync';
+import { TabSyncer } from './tab-sync';
 
 export {
-  TabSync,
+  TabSyncer,
 };

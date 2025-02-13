@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('TabSync Example Page', () => {
+test.describe('TabSyncer Example Page', () => {
   test('should handle counter operations correctly', async ({ page }) => {
     await page.goto('http://localhost:3002');
     
