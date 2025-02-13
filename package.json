@@ -1,5 +1,5 @@
 {
-  "name": "tab-sync",
+  "name": "@telephant11/tab-sync",
   "version": "1.0.0",
   "description": "A lightweight (4KB) library for browser tab state synchronization and communication. Supports auto-persistence and real-time data sync between tabs.",
   "main": "dist/src/index.js",
