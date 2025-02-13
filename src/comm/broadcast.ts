@@ -1,4 +1,4 @@
-import { BaseSync, EventMap } from '@/interface/base';
+import { BaseSync, EventMap } from '../interface/base';
 
 class BroadcastHandler<T extends EventMap> implements BaseSync<T> {
   private static instance: BroadcastHandler<EventMap>;
@@ -30,7 +30,6 @@ class BroadcastHandler<T extends EventMap> implements BaseSync<T> {
   _listenOn() {
     this.bc.onmessage = (event) => {
       const { event: e, params } = event.data;
-
       this.listeners.get(e)?.(params);
     };
   }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>TabSync Example</title>
+</head>
+
+<body>
+  <div style="display: flex; justify-content: center; ">
+    <div style="padding: 20px;">
+      <h2>TabSync Example</h2>
+      <div>
+        <h3>Counter</h3>
+        Count: <span id="count">0</span>
+        <button id="increment">+1</button>
+        <button id="decrement">-1</button>
+      </div>
+      <div style="margin-top: 20px;">
+        <h3>Message</h3>
+        <input id="messageInput" type="text" placeholder="输入消息">
+        <div>Current Message: <span id="message"></span></div>
+      </div>
+      <div style="margin-top: 20px;">
+        <h3>Action</h3>
+        <button id="handsUp">Hands Up</button>
+        <button id="handsDown">Hands Down</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { TabSync } from '/dist/index.js';
+
+    const tabSync = new TabSync(
+      'example',
+      'broadcast',
+      {
+        count: 0,
+        messages: '',
+      }
+    );
+
+    const countElement = document.getElementById('count');
+    const messageElement = document.getElementById('message');
+    const incrementButton = document.getElementById('increment');
+    const decrementButton = document.getElementById('decrement');
+    const messageInput = document.getElementById('messageInput');
+
+    const handsUpButton = document.getElementById('handsUp');
+    const handsDownButton = document.getElementById('handsDown');
+
+    function updateUI(state) {
+      countElement.textContent = state.count;
+      messageElement.textContent = state.messages;
+    }
+
+    tabSync.onStateChange((state) => {
+      updateUI(state);
+    });
+
+    incrementButton.onclick = () => {
+      tabSync.setState(prevState => ({
+        ...prevState,
+        count: prevState.count + 1
+      }));
+
+      updateUI(tabSync.getState());
+    };
+
+    decrementButton.onclick = () => {
+      tabSync.setState(prevState => ({
+        ...prevState,
+        count: prevState.count - 1
+      }));
+
+      updateUI(tabSync.getState());
+    };
+
+    messageInput.oninput = (e) => {
+      tabSync.setState(prevState => ({
+        ...prevState,
+        messages: e.target.value,
+      }));
+
+      updateUI(tabSync.getState());
+    };
+
+    handsUpButton.onclick = () => {
+      tabSync.notify('handsUp', {
+        from: window.name,
+      });
+    };
+
+    handsDownButton.onclick = () => {
+      tabSync.notify('handsDown', {
+        from: window.performance.timeOrigin,
+      });
+    };
+
+    tabSync.subscribe('handsUp', (state) => {
+      alert(`${state.from} hands up`);
+    });
+
+    tabSync.subscribe('handsDown', (state) => {
+      alert(`${state.from} hands down`);
+    });
+
+    updateUI(tabSync.getState());
+  </script>
+</body>
+
+</html>

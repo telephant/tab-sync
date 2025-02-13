@@ -9,3 +9,7 @@ export interface BaseSync<T extends EventMap> {
   subscribe(event: string, callback: (message: string) => void): void;
   unsubscribe(event: string, callback: (message: string) => void): void;
 }
+
+export interface StateOptions<T> {
+  persist: boolean;
+}

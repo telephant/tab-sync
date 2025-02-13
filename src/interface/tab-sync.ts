@@ -1,7 +1,6 @@
-import { EventParamsMap } from '@/util/event-emitter';
 import { BaseSync, EventMap } from './base';
 
-export interface TabSyncType<T extends EventParamsMap> extends BaseSync<T> {
+export interface TabSyncType<T extends EventMap> extends BaseSync<T> {
   setState(state: any): void;
   getState(): any;
   onStateChange(callback: (state: any) => void): void;

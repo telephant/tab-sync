@@ -1,17 +1,14 @@
-import { BroadcastHandler } from '@/comm/broadcast';
-import { SyncMode } from '@/interface/base';
-import { TabSyncType } from '@/interface/tab-sync';
-import { State } from '@/store/state';
-import { EventParamsMap, TypeEventEmitter } from '@/util/event-emitter';
+import { BroadcastHandler } from './comm/broadcast';
+import { SyncMode, EventMap } from './interface/base';
+import { TabSyncType } from './interface/tab-sync';
+import { State } from './store/state';
 
-class TabSync<T extends EventParamsMap, P extends object> implements TabSyncType<T> {
+class TabSync<T extends EventMap, P extends object> implements TabSyncType<T> {
   private name: string;
 
   private mode: SyncMode;
 
   private state: State<P>;
-
-  private eventEmitter: TypeEventEmitter<T>;
 
   private _handler: BroadcastHandler<T>;
 
@@ -20,36 +17,37 @@ class TabSync<T extends EventParamsMap, P extends object> implements TabSyncType
 
     this.mode = mode;
 
-    this.state = new State<P>(initialState);
-
-    this.eventEmitter = new TypeEventEmitter<T>();
-
     this._handler = this.getHandler();
+
+    this.state = new State<P>(
+      initialState,
+      (cb) => {
+        this._handler.subscribe('stateChange', cb);
+      },
+      (state) => this._handler.notify('stateChange', state as T['stateChange'])
+    );
   }
 
   getHandler(): BroadcastHandler<T> {
     switch(this.mode) {
       case 'broadcast':
-        return BroadcastHandler.getInstance<T>(this.name);
-      // case 'localstorage':
       default:
         return BroadcastHandler.getInstance<T>(this.name);
-        // this._handler = new LocalStorageHandler();
+      // case 'localstorage':
+      //   return LocalStorageHandler.getInstance<T>(this.name);
     }
   }
   
   notify<E extends keyof T>(event: E, params: T[E]): void {
-    this.eventEmitter.emit(event as string, params);
-
     this._handler.notify(event, params);
   }
 
-  subscribe<E extends keyof T>(event: E, callback: (...args: T[E]) => void): void {
-    this.eventEmitter.on(event as any, callback);
+  subscribe<E extends keyof T>(event: E, callback: (params: T[E]) => void): void {
+    this._handler.subscribe(event, callback);
   }
 
-  unsubscribe<E extends keyof T>(event: E, callback: (...args: T[E]) => void): void {
-    this.eventEmitter.off(event as any, callback);
+  unsubscribe<E extends keyof T>(event: E, callback: (params: T[E]) => void): void {
+    this._handler.unsubscribe(event, callback);
   }
 
   setState(...params: Parameters<State<P>['setState']>): void {
