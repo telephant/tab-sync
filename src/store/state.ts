@@ -49,9 +49,9 @@ class State<T> {
   setState(param: T | ((prevState: T) => T), notify: boolean = true) {
     if (typeof param !== 'function') {
       this.data = param;
+    } else {
+      this.data = (param as Function)?.(this.data);
     }
-
-    this.data = (param as Function)?.(this.data);
 
     // notify listeners
     if (notify) {
