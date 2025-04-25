@@ -41,13 +41,13 @@ class BroadcastHandler<T extends EventMap> implements BaseSync<T> {
   }
 
   subscribe<E extends keyof T>(event: E, callback: (params: T[E]) => void): void {
-    console.log('subscribe', event, callback);
+    console.log('subscribe', event);
 
     this.listeners.set(event as string, callback);
   }
 
   unsubscribe<E extends keyof T>(event: E, callback: (params: T[E]) => void): void {
-    console.log('unsubscribe', event, callback);
+    console.log('unsubscribe', event);
 
     this.listeners.delete(event as string);
   }
