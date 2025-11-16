@@ -1,6 +1,6 @@
 {
   "name": "tab-syncer",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A lightweight (4KB) library for browser tab state synchronization and communication. Supports auto-persistence and real-time data sync between tabs.",
   "main": "dist/index.js",
   "type": "module",
